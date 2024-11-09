@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{{user.username}}'s Watchlist</title>
+        <link rel="icon" href="{{url_for('static',filename='image/icon.jpg')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+    </head>
+
+    <body>
+        <ul class="movie-list">
+            <li>
+                Page Not Found - 404
+                <span class="float-right">
+                    <a href="{{ url_for('index') }}">Go Back</a>
+                </span>
+            </li>
+        </ul>
+        <footer>
+            <small>&copy; 2024 <a href="https://tutorial.helloflask.com/template2/">HelloFlask</a></small>
+        </footer>
+    </body>
+</html>

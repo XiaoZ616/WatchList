@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wachlist Registration</title>
+    <link rel="icon" href="static/image/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static' ,filename='css/style.css')}}" type="text/css">
+</head>
+
+<body>
+    <h2>Registration</h2>
+
+    <form method="post">
+        Your Username:<input type="text" name="username" autocomplete="off">
+        <br><br>
+        Your Password:<input type="password" name="password" autocomplete="off">
+        <br><br>
+        <input class="btn" type="submit" value="Register">
+    </form>
+
+    <!-- 获取flash提示信息并显示 -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert">{{ message }}</div>
+    {% endfor %}
+
+</body>
