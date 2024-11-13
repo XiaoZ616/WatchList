@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Wachlist Index</title>
+        <link rel="icon" href="static/image/icon.jpg" type="image/x-icon">
+        <link rel="stylesheet" href="{{url_for('static' ,filename='css/style.css')}}" type="text/css" >
+    </head>
+
+    <body>
+
+        <div class="title">
+
+            {% if current_user.is_authenticated %}
+
+                <!-- 标题 -->
+                <span class="title">
+                    <h2>{{current_user.username}}'s Watchlist </h2>
+                </span>
+
+                <!-- 登出按钮 -->
+                <span >
+                    <form method="post" action="{{url_for('logout')}}">
+                        <input class="spebtn" type="submit" name="logout" value="Logout" 
+                        onclick="return confirm('Are you sure?')">
+                    </form>
+                </span>
+
+                <!-- 设置按钮 -->
+                <span>
+                    <form method="post">
+                        <a class="spebtn" href="{{url_for('settings')}}">Settings</a>
+                    </form>
+                </span>
+
+
+            {% else %}
+                
+                <!-- 标题 -->
+                <span class="title">
+                    <h2>ZBT's Watchlist</h2>
+                </span>
+
+                <!-- 登录按钮 -->
+                <span class="login">
+                    <a class="spebtn" href="{{url_for('login')}}">Login</a>
+                </span>
+
+                <!-- 注册按钮 -->
+                <span class="register">
+                    <a class="spebtn" href="{{url_for('register')}}">Register</a>
+                </span>
+            {% endif %}
+
+        </div>
+        <br>
+        
+
+
+        <!-- 电影列表 -->
+        <h4>{{ movies|length }} Titles</h4>
+        <ul class="movie-list">
+            {% for movie in movies %}
+            <li>{{movie.title}} - {{movie.year}} 
+
+                {% if current_user.is_authenticated %}
+                    <!-- 在每条后面添加编辑入口 -->
+                    <span class="edit">
+                        <a class="btn" href="{{ url_for('edit', movie_id=movie.id) }}">Edit</a>
+                    </span>
+                        
+                    <!-- 在每条后面添加删除功能 -->
+                    <span class="delete">
+                        <form method="post" action="{{url_for('delete',movie_id=movie.id)}}">
+                            <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                        </form>
+                        <!-- <a class="btn" href="{{url_for('delete',movie_id=movie.id)}}">Delete</a>  -->
+                    </span> 
+                {% endif %}
+
+            </li> 
+            {% endfor %}
+        </ul>   
+        <br>
+
+
+
+        <!-- 创建新条目表单 -->
+        {% if current_user.is_authenticated %}
+        <fieldset>
+            <h3>Add new items</h3>
+            <form method="post">
+                Title <input type="text" name="title" autocomplete="off" required>
+                Year <input type="text" name="year" autocomplete="off" required>
+                <input class="btn" type="submit" name="submit" value="Add">
+            </form>
+        </fieldset>
+        {% endif %}
+
+        <!-- 获取flash提示信息并显示 -->
+        {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+        {% endfor %}
+        
+    </body>
+
+
+    <footer>
+        <small>&copy; 2024 
+            <a href="https://xiaoz616.github.io/My-Website/FirstWeb.html">
+                <abbr title="Author of this page">Bin Chou</abbr>
+            </a>
+        </small>
+    </footer>
+</html>
